@@ -42,9 +42,12 @@ No frontend/UI is included; this is API-only.
 
 ## Factories / Seeders
 
-- **ProductSeeder**: Seeds 1 product with finite stock and price.  
-- **HoldFactory**: Generates hold instances for testing.  
-- **OrderFactory**: Generates orders linked to valid holds.
+ - **ProductSeeder**: Seeds 1 product with finite stock and price.  
+ - **HoldFactory**: Generates hold instances for testing.  
+ - **OrderFactory**: Generates orders linked to valid holds.
+ - **ProductFactory:** Generates products with random name, price, and stock level.  
+ - **WebhookTransactionFactory:** Generates webhook transaction records for testing payment handling.  
+
 
 ---
 
