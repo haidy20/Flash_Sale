@@ -1,7 +1,6 @@
 # Laravel Flash-Sale Checkout API
 
 **Project:** Flash-Sale Checkout (Concurrency & Correctness)  
-**Tech Stack:** Laravel 12, MySQL (InnoDB), any Laravel cache driver (database/file/memcached/redis/etc.)
 
 ---
 
@@ -29,10 +28,15 @@ No frontend/UI is included; this is API-only.
   - Ensures correct final state even if the webhook arrives multiple times or before order creation.  
 - **Caching & Performance:**  
   - Short-term cache for availability to speed up reads under burst traffic.  
-  - Avoids N+1 queries on listing endpoints.  
-- **Logging / Metrics:**  
-  - Structured logging around stock contention, retries, webhook deduplication.  
-  - Track hold creation, expiry, and payment events.
+  - Avoids N+1 queries on listing endpoints.
+  - 
+  - ### Logging / Metrics
+  All logs and metrics are tracked using **Laravel’s built-in logging system** (`storage/logs/laravel.log`).  
+  Structured logging is used to monitor:  
+- Stock contention and retries  
+- Hold creation and expiry  
+- Payment webhook processing and deduplication
+
 
 ---
 
@@ -52,7 +56,7 @@ No frontend/UI is included; this is API-only.
 ### 4. Payment Webhook
 
 
-- `status` can be `success` or `failure`.  
+- In Payment Webhook `status` can be `success` or `failure`.  
 - Idempotency ensures repeated webhook calls do **not** change stock/order incorrectly.
 
 ---
@@ -81,10 +85,12 @@ cp .env.example .env
 php artisan key:generate
 
 # Configure .env for database and cache
-دددد
 
 # Run migrations and seed initial data
 php artisan migrate --seed
+
+# Run project
+php artisan serve
 
 # Run tests
 php artisan test
