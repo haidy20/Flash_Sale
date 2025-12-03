@@ -8,10 +8,12 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class HoldExpiryTest extends TestCase
 {
     use RefreshDatabase;
+    #[Test]
 
     public function expired_hold_quantity_is_returned_to_available_stock()
     {

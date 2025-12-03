@@ -6,11 +6,13 @@ use App\Models\Order;
 use App\Models\WebhookTransaction;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 
 class PaymentWebhookTest extends TestCase
 {
     use RefreshDatabase;
+    #[Test]
 
     public function webhook_with_same_idempotency_key_is_ignored_on_second_attempt()
     {
@@ -24,11 +26,11 @@ class PaymentWebhookTest extends TestCase
         ]);
 
         $response1->assertOk()
-                  ->assertJsonPath('status', 'success');
-        
+            ->assertJsonPath('status', 'success');
+
         $order->refresh();
         $this->assertEquals('paid', $order->status);
-        
+
         $this->assertDatabaseHas('webhook_transactions', [
             'idempotency_key' => $idempotencyKey,
             'order_id' => $order->id,
@@ -41,14 +43,14 @@ class PaymentWebhookTest extends TestCase
             'order_id' => $order->id,
             'status' => 'successful',
         ]);
-        
+
         $response2->assertOk()
-                  ->assertJsonPath('status', 'ignored')
-                  ->assertJsonPath('message', 'Webhook already has been processed using this idempotency key.');
+            ->assertJsonPath('status', 'ignored')
+            ->assertJsonPath('message', 'Webhook already has been processed using this idempotency key.');
 
         $order->refresh();
         $this->assertEquals('paid', $order->status, 'Order status should not be changed by duplicate webhook.');
-        
+
         // التأكد من أن key لم يتم تسجيله مرتين
         $this->assertEquals(1, WebhookTransaction::where('idempotency_key', $idempotencyKey)->count());
     }

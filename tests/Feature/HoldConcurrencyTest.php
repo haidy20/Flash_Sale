@@ -6,10 +6,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\Product;
 use App\Models\Hold;
+use PHPUnit\Framework\Attributes\Test;
 
 class HoldConcurrencyTest extends TestCase
 {
     use RefreshDatabase;
+    #[Test]
 
     public function it_prevents_overselling_on_parallel_hold_attempts_at_stock_boundary()
     {

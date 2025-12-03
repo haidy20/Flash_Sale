@@ -6,10 +6,13 @@ use App\Models\Order;
 use App\Models\WebhookTransaction;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
+
 
 class WebhookRaceConditionTest extends TestCase
 {
     use RefreshDatabase;
+    #[Test]
 
     public function webhook_is_ignored_if_order_is_not_in_pending_payment_state()
     {
